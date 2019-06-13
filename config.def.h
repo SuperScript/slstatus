@@ -65,12 +65,15 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function format          argument */
-	{ keyboard_indicators, "[%s]", "c?" },
-	{ load_avg, " [%s]",            NULL },
-	{ battery_perc, " [%s",        "BAT0" },
-	{ battery_state, "%s",       "BAT0" },
-	{ battery_remaining, " %s]",   "BAT0" },
-	{ wifi_essid, " [%s",          "wlp60s0" },
-	{ wifi_perc, " %s]",           "wlp60s0" },
-	{ datetime, " %s",             "%F %T" },
+	/* { keyboard_indicators, "[%s]", "c?" }, */
+	{ run_command, " [br %s]",  "xbacklight -get | awk '{printf(\"%02.2f\",$1)}'" },
+	{ battery_perc, " [ba %s%%",  "BAT0" },
+	{ battery_state, "%s",          "BAT0" },
+	{ battery_remaining, " %s]",    "BAT0" },
+	{ wifi_essid, " [%s",           "wlp60s0" },
+	{ wifi_perc, " %s]",            "wlp60s0" },
+	{ run_command, " [%s]",         "amixer get Master | awk '$4~/\\[[0-9]+%\\]/{if (\"[off]\"==$6) printf \"vm \"; else printf \"vo \"; print substr($4,2,length($4)-3)}'"},
+	{ run_command, " [%s]",         "amixer get Capture|awk 'BEGIN{printf(\"m\")};$5{$5=substr($5,2,length($5)-2)};$7==\"[on]\"{printf(\" +%s\",$5)};$7==\"[off]\"{printf(\" -%s\",$5)}'" },
+	{ load_avg, " [%s]",       NULL },
+	{ datetime, " %s",              "%F %T" },
 };
