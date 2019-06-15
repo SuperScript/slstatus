@@ -65,12 +65,12 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function format          argument */
-	{ keyboard_indicators, "%s", "c?" },
-	{ battery_perc, "|p %s%%",     "BAT0" },
-	{ battery_state, "%s",          "BAT0" },
-	{ battery_remaining, " %s",    "BAT0" },
-	{ wifi_essid, "|%s",           "wlp60s0" },
-	{ wifi_perc, " %s",            "wlp60s0" },
+	{ keyboard_indicators, "%s",  "c?" },
+	{ wifi_essid, "|%s",          "wlp60s0" },
+	{ wifi_perc, " %s",           "wlp60s0" },
+	{ battery_state, "|p %s",     "BAT0" },
+	{ battery_perc, "%s",         "BAT0" },
+	{ battery_remaining, " %s",   "BAT0" },
 	{ run_command, "|b %s",       "xbacklight -get | awk '{printf(\"%02.0f\",$1)}'" },
 	{ run_command, "|%s",         "amixer get Master | awk '$4~/\\[[0-9]+%\\]/{if (\"[off]\"==$6) printf \"v -\"; else printf \"v +\"; print substr($4,2,length($4)-3)}'"},
 	{ run_command, "|%s",         "amixer get Headphone|awk 'BEGIN{printf(\"vh\")};$5{$5=substr($5,2,length($5)-3)};$7==\"[on]\"{printf(\" +%s\",$5)};$7==\"[off]\"{printf(\" -%s\",$5)}'" },
