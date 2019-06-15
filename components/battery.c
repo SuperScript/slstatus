@@ -106,7 +106,7 @@
 			h = timeleft;
 			m = (timeleft - (double)h) * 60;
 
-			return bprintf("%juh %jum", h, m);
+			return bprintf("%02ju:%02ju", h, m);
 		}
 
 		return "";
@@ -182,7 +182,7 @@
 			if (apm_info.ac_state != APM_AC_ON) {
 				h = apm_info.minutes_left / 60;
 				m = apm_info.minutes_left % 60;
-				return bprintf("%uh %02um", h, m);
+				return bprintf("%02uh %02um", h, m);
 			} else {
 				return "";
 			}
@@ -242,6 +242,6 @@
 		    || rem < 0)
 			return NULL;
 
-		return bprintf("%uh %02um", rem / 60, rem % 60);
+		return bprintf("%02u:%02u", rem / 60, rem % 60);
 	}
 #endif
