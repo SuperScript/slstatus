@@ -65,15 +65,17 @@ static const char unknown_str[] = "n/a";
  */
 static const struct arg args[] = {
 	/* function format          argument */
-	/* { keyboard_indicators, "[%s]", "c?" }, */
-	{ run_command, " [br %s]",  "xbacklight -get | awk '{printf(\"%02.2f\",$1)}'" },
-	{ battery_perc, " [ba %s%%",  "BAT0" },
+	{ keyboard_indicators, "%s", "c?" },
+	{ battery_perc, "|p %s%%",     "BAT0" },
 	{ battery_state, "%s",          "BAT0" },
-	{ battery_remaining, " %s]",    "BAT0" },
-	{ wifi_essid, " [%s",           "wlp60s0" },
-	{ wifi_perc, " %s]",            "wlp60s0" },
-	{ run_command, " [%s]",         "amixer get Master | awk '$4~/\\[[0-9]+%\\]/{if (\"[off]\"==$6) printf \"vm \"; else printf \"vo \"; print substr($4,2,length($4)-3)}'"},
-	{ run_command, " [%s]",         "amixer get Capture|awk 'BEGIN{printf(\"m\")};$5{$5=substr($5,2,length($5)-2)};$7==\"[on]\"{printf(\" +%s\",$5)};$7==\"[off]\"{printf(\" -%s\",$5)}'" },
-	{ load_avg, " [%s]",       NULL },
-	{ datetime, " %s",              "%F %T" },
+	{ battery_remaining, " %s",    "BAT0" },
+	{ wifi_essid, "|%s",           "wlp60s0" },
+	{ wifi_perc, " %s",            "wlp60s0" },
+	{ run_command, "|b %s",       "xbacklight -get | awk '{printf(\"%02.0f\",$1)}'" },
+	{ run_command, "|%s",         "amixer get Master | awk '$4~/\\[[0-9]+%\\]/{if (\"[off]\"==$6) printf \"v -\"; else printf \"v +\"; print substr($4,2,length($4)-3)}'"},
+	{ run_command, "|%s",         "amixer get Headphone|awk 'BEGIN{printf(\"vh\")};$5{$5=substr($5,2,length($5)-3)};$7==\"[on]\"{printf(\" +%s\",$5)};$7==\"[off]\"{printf(\" -%s\",$5)}'" },
+	{ run_command, "|%s",         "amixer get Speaker|awk 'BEGIN{printf(\"vs\")};$5{$5=substr($5,2,length($5)-3)};$7==\"[on]\"{printf(\" +%s\",$5)};$7==\"[off]\"{printf(\" -%s\",$5)}'" },
+	{ run_command, "|%s",         "amixer get Capture|awk 'BEGIN{printf(\"m\")};$5{$5=substr($5,2,length($5)-3)};$7==\"[on]\"{printf(\" +%s\",$5)};$7==\"[off]\"{printf(\" -%s\",$5)}'" },
+	{ load_avg, "|%s",            NULL },
+	{ datetime, "|%s",              "%F %T" },
 };
