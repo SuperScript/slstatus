@@ -75,8 +75,6 @@ static const struct arg args[] = {
 	{ battery_remaining, " %s",   "BAT0" },
 	{ run_command, "|b %s",       "xbacklight -get | awk '{printf(\"%02.0f\",$1)}'" },
 	{ run_command, "|%s",         "amixer get Master | awk '$4~/\\[[0-9]+%\\]/{if (\"[off]\"==$6) printf \"v -\"; else printf \"v +\"; print substr($4,2,length($4)-3)}'"},
-	/* { run_command, "|%s",         "amixer get Headphone|awk 'BEGIN{printf(\"vh\")};$5{$5=substr($5,2,length($5)-3)};$7==\"[on]\"{printf(\" +%s\",$5)};$7==\"[off]\"{printf(\" -%s\",$5)}'" }, */
-	/* { run_command, "|%s",         "amixer get Speaker|awk 'BEGIN{printf(\"vs\")};$5{$5=substr($5,2,length($5)-3)};$7==\"[on]\"{printf(\" +%s\",$5)};$7==\"[off]\"{printf(\" -%s\",$5)}'" }, */
 	{ run_command, "|%s",         "amixer get Capture|awk 'BEGIN{printf(\"m\")};$5{$5=substr($5,2,length($5)-3)};$7==\"[on]\"{printf(\" +%s\",$5)};$7==\"[off]\"{printf(\" -%s\",$5)}'" },
 	{ load_avg, "|%s",            NULL },
 	{ datetime, "|%s",              "%F %T" },
