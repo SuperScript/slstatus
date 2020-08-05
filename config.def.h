@@ -67,7 +67,7 @@ static const struct arg args[] = {
 	/* function format          argument */
   
 	{ run_command, "%s",          "{ cat /sys/class/power_supply/BAT0/status /sys/class/power_supply/BAT0/capacity; }|awk 'BEGIN{split(\"!!,--\",alarm,\",\")};/Discharging/{out=1;next};$1<10 && out{printf(alarm[1+(systime()%2)]);exit 0};{printf(\"OK\");exit 0}'" },
-	{ keyboard_indicators, "%s",  "c?" },
+	{ keyboard_indicators, "|%s",  "c?" },
 	{ wifi_essid, "|%s",          "wlp60s0" },
 	{ wifi_perc, " %s",           "wlp60s0" },
 	{ battery_state, "|p %s",     "BAT0" },
