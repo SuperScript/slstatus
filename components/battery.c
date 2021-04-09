@@ -5,7 +5,7 @@
 #include "../slstatus.h"
 #include "../util.h"
 
-#if defined(__linux__)
+#if defined(__linux__) || defined(__FreeBSD__)
 /*
  * https://www.kernel.org/doc/html/latest/power/power_supply_class.html
  */
@@ -182,7 +182,7 @@
 			if (apm_info.ac_state != APM_AC_ON) {
 				h = apm_info.minutes_left / 60;
 				m = apm_info.minutes_left % 60;
-				return bprintf("%02uh %02um", h, m);
+				return bprintf("%02uh:%02um", h, m);
 			} else {
 				return "";
 			}
@@ -243,5 +243,43 @@
 			return NULL;
 
 		return bprintf("%02u:%02u", rem / 60, rem % 60);
+	}
+
+	static int warning_status = 0;
+
+	const char *
+	battery_warn(const char *limit)
+	{
+		int state;
+		int cap;
+		int lim;
+		size_t len;
+		const char *warn_ok = "OK";
+		const char *warn_bang = "!!K";
+
+		if (sscanf(limit,"%d",&lim) == -1)
+			return NULL;
+
+		len = sizeof(state);
+		if (sysctlbyname("hw.acpi.battery.state", &state, &len, NULL, 0) == -1
+				|| !len)
+			return NULL;
+
+		if (state == 2)
+			return warn_ok;
+
+		len = sizeof(cap);
+		if (sysctlbyname("hw.acpi.battery.life", &cap, &len, NULL, 0) == -1
+				|| !len)
+			return NULL;
+
+		if (cap < lim) {
+			warning_status = 1 - warning_status;
+			if (warning_status)
+				return warn_bang;
+			return warn_ok;
+		}
+
+		return warn_ok;
 	}
 #endif
