@@ -66,16 +66,13 @@ static const char unknown_str[] = "n/a";
 static const struct arg args[] = {
 	/* function format          argument */
   
-	{ run_command, "%s",          "{ cat /sys/class/power_supply/BAT0/status /sys/class/power_supply/BAT0/capacity; }|awk 'BEGIN{split(\"!!,--\",alarm,\",\")};/Discharging/{out=1;next};$1<10 && out{printf(alarm[1+(systime()%2)]);exit 0};{printf(\"OK\");exit 0}'" },
-	{ keyboard_indicators, "|%s",  "c?" },
-	{ wifi_essid, "|%s",          "wlp60s0" },
-	{ wifi_perc, " %s",           "wlp60s0" },
-	{ battery_state, "|p %s",     "BAT0" },
-	{ battery_perc, "%s",         "BAT0" },
-	{ battery_remaining, " %s",   "BAT0" },
-	{ run_command, "|b %s",       "xbacklight -get | awk '{printf(\"%02.0f\",$1)}'" },
-	{ run_command, "|%s",         "amixer get Master | awk '$4~/\\[[0-9]+%\\]/{if (\"[off]\"==$6) printf \"v -\"; else printf \"v +\"; print substr($4,2,length($4)-3)}'"},
-	{ run_command, "|%s",         "amixer get Capture|awk 'BEGIN{printf(\"m\")};$5{$5=substr($5,2,length($5)-3)};$7==\"[on]\"{printf(\" +%s\",$5)};$7==\"[off]\"{printf(\" -%s\",$5)}'" },
-	{ load_avg, "|%s",            NULL },
-	{ datetime, "|%s",              "%F %T" },
+	{ battery_warn,        "%s",    "10"    },
+	{ keyboard_indicators, "|%s",   "c?"    },
+	{ wifi_essid,          "|%s",   "wlan0" },
+	{ wifi_perc,           " %s",   "wlan0" },
+	{ battery_state,       "|p %s", "BAT0"  },
+	{ battery_perc,        "%s",    "BAT0"  },
+	{ battery_remaining,   " %s",   "BAT0"  },
+	{ load_avg,            "|%s",   NULL    },
+	{ datetime,            "|%s",   "%F %T" },
 };
