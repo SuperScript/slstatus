@@ -245,7 +245,12 @@
 		return bprintf("%02u:%02u", rem / 60, rem % 60);
 	}
 
-	static int warning_status = 0;
+	static int battery_warn_status = 0;
+	static const char *battery_warn_string[] = {
+		"OK",
+		"!!",
+		"--"
+	};
 
 	const char *
 	battery_warn(const char *limit)
@@ -253,9 +258,7 @@
 		int state;
 		int cap;
 		int lim;
-		size_t len;
-		const char *warn_ok = "OK";
-		const char *warn_bang = "!!K";
+		size_t len = sizeof(cap);
 
 		if (sscanf(limit,"%d",&lim) == -1)
 			return NULL;
@@ -265,21 +268,17 @@
 				|| !len)
 			return NULL;
 
-		if (state == 2)
-			return warn_ok;
+		if (state == 2) {
+			battery_warn_status = 0;
+                }
+                else {
+			if (sysctlbyname("hw.acpi.battery.life", &cap, &len, NULL, 0) == -1 || !len)
+				return NULL;
 
-		len = sizeof(cap);
-		if (sysctlbyname("hw.acpi.battery.life", &cap, &len, NULL, 0) == -1
-				|| !len)
-			return NULL;
-
-		if (cap < lim) {
-			warning_status = 1 - warning_status;
-			if (warning_status)
-				return warn_bang;
-			return warn_ok;
+			if (cap < lim) {
+				battery_warn_status = 2 + (battery_warn_status != 0) - battery_warn_status;
+			}
 		}
-
-		return warn_ok;
+		return battery_warn_string[battery_warn_status];
 	}
 #endif
