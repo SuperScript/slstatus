@@ -207,7 +207,7 @@
 		if (sysctlbyname(BATTERY_LIFE, &cap_perc, &len, NULL, 0) < 0 || !len)
 			return NULL;
 
-		return bprintf("%d", cap_perc);
+		return bprintf("%3d", cap_perc);
 	}
 
 	const char *
@@ -240,7 +240,7 @@
 		len = sizeof(rem);
 		if (sysctlbyname(BATTERY_TIME, &rem, &len, NULL, 0) < 0 || !len
 		    || rem < 0)
-			return NULL;
+			return "--:--";
 
 		return bprintf("%02u:%02u", rem / 60, rem % 60);
 	}

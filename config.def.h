@@ -67,11 +67,11 @@ static const struct arg args[] = {
 	/* function format          argument */
   
 	{ battery_warn,        "%s",    "10"    },
-	{ keyboard_indicators, "|%s",   "c?"    },
 	{ wifi_essid,          "|%s",   "wlan0" },
 	{ wifi_perc,           " %s",   "wlan0" },
-	{ battery_state,       "|p %s", "BAT0"  },
-	{ battery_perc,        "%s",    "BAT0"  },
+	{ run_command,         "|%s",   "web-dwm audio status" },
+	{ battery_perc,        "|%s",   "BAT0"  },
+	{ battery_state,       "%s",    "BAT0"  },
 	{ battery_remaining,   " %s",   "BAT0"  },
 	{ load_avg,            "|%s",   NULL    },
 	{ datetime,            "|%s",   "%F %T" },

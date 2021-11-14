@@ -186,7 +186,7 @@
 		strlcpy(ireq.i_name, interface, sizeof(ireq.i_name));
 		if (ioctl(sock, SIOCG80211, &ireq) < 0) {
 			snprintf(warn_buf,  sizeof(warn_buf),
-					"ioctl: 'SIOCG80211': %d", type);
+					"ioctl: 'SIOCG80211': %3d", type);
 			warn(warn_buf);
 			return 0;
 		}
