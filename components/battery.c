@@ -5,7 +5,7 @@
 #include "../slstatus.h"
 #include "../util.h"
 
-#if defined(__linux__) || defined(__FreeBSD__)
+#if defined(__linux__)
 /*
  * https://www.kernel.org/doc/html/latest/power/power_supply_class.html
  */
