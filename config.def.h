@@ -69,7 +69,7 @@ static const struct arg args[] = {
 	{ battery_warn,        "%s",    "10"    },
 	/* { wifi_essid,          "|%s",   "wlan0" }, */
 	/* { wifi_perc,           " %s",   "wlan0" }, */
-	{ run_command,         "|%s",   "dcmd vol status" },
+	{ run_command,         "|%s",   "dcmd sound status" },
 	{ run_command,         " %s",   "dcmd sound get" },
 	{ battery_perc,        "|%s",   "BAT0"  },
 	{ battery_state,       "%s",    "BAT0"  },
