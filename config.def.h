@@ -67,13 +67,13 @@ static const struct arg args[] = {
 	/* function format          argument */
   
 	{ battery_warn,        "%s",    "10"    },
-	/* { wifi_essid,          "|%s",   "wlan0" }, */
-	/* { wifi_perc,           " %s",   "wlan0" }, */
-	{ run_command,         "|%s",   "dcmd sound status" },
-	{ run_command,         " %s",   "dcmd sound get" },
-	{ battery_perc,        "|%s",   "BAT0"  },
-	{ battery_state,       "%s",    "BAT0"  },
-	{ battery_remaining,   " %s",   "BAT0"  },
+	// { vol_perc,            "|%s",    NULL }, /* sndio cannot open device */
+	{ run_command,         "%s",   "mixer -S | awk -F '[: ]' '{printf(\"%3sr %3sv\",$14,$2)}'" },
+	{ wifi_essid,          "|%s",   "wlan0"    },
+	{ wifi_perc,           " %s",   "wlan0"    },
+	{ battery_perc,        "|%s",   NULL  },
+	{ battery_state,       "%s",    NULL  },
+	{ battery_remaining,   " %s",   NULL  },
 	{ load_avg,            "|%s",   NULL    },
 	{ datetime,            "|%s",   "%F %T" },
 };
