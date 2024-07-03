@@ -67,7 +67,8 @@ static const struct arg args[] = {
 	/* function format          argument */
 	{ battery_warn,        "%s",    "10"    },
 	// { vol_perc,            "|%s",    NULL }, /* sndio cannot open device */
-	// { run_command,         "%s",   "mixer -S | awk -F '[: ]' '{printf(\"%3s%s%s\",$2,($14 > 0 ? \"\" : \"M\" ),($5 > 0 ? \"\" : \"S\"))}'" },
+	// { run_command,         "%s",   "mixer -o vol.volume vol.mute rec.mute | awk -F '[=]' '{print}'"},
+	{ run_command,         "%s",   "mixer -o vol.volume vol.mute rec.mute | awk -F '[=]' '$1==\"vol.volume\"{v=substr($2,1,index($2,\":\")) * 100; next};$1==\"vol.mute\"{if ($2==\"on\") {s=\"S\"}; next};$1==\"rec.mute\"{if ($2==\"on\") {m=\"M\"}; next};END{printf(\"%s%s%s\",v,s,m)}'"},
 	{ wifi_essid,          "|%s",   "wlan0"    },
 	{ wifi_perc,           " %s",   "wlan0"    },
 	{ battery_perc,        "|%s",   NULL  },
